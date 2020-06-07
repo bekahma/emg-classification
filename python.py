@@ -1,1 +1,1 @@
-# idk help
+print("Hello World")
