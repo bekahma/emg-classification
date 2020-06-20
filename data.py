@@ -36,26 +36,18 @@ plt.plot(t_sec, ch_mv)
 plt.ylabel('channel1 (mV)')
 plt.xlabel('time in (s)')
 plt.title('plot 1: EMG signal vs. time')
-plt.show()
-
-# plot 2: ch_mv vs. t_sec (red when class = 2) 
-plt.plot(t_sec, ch_mv)
-plt.ylabel('channel1 (mV)')
-plt.xlabel('time (s)')
-plt.title('plot 2: EMG signal vs. time')
 # plt.show()
 
-# if class = 2
-# plot data in red
-# else
-# plot data?
-
-for i in cl:
+# plot 2: ch_mv vs. t_sec (red when class = 2)
+length = len(cl)
+# plt.plot(t_sec, ch_mv, color='blue')
+for i in range(length):
     if cl[i] == 2:
         plt.plot(t_sec[i], ch_mv[i], color='red')
-    else:
-        plt.plot(t_sec, ch_mv)
+
 plt.title('plot 2: EMG signal vs. time')
+plt.ylabel('channel1 (mV)')
+plt.xlabel('time (s)')
 plt.show()
 
 
