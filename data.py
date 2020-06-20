@@ -10,10 +10,6 @@ df['class'] = df['class'].astype(int)
 
 print(df.dtypes)
 
-# t = df[‘time’].values()
-# cl= df[‘class’].values()
-# ch = df[‘channel1’].values()
-
 time_col = df.loc[:,'time']
 class_col = df.loc[:,'class']
 channel1_col = df.loc[:,'channel1']
