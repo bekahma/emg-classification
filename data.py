@@ -8,7 +8,6 @@ print(file1.columns)
 
 df = file1.astype({"class": int})
 
-
 # .astype('int')
 
 # df.astype('str')
