@@ -21,6 +21,3 @@ ch = channel1_col.values
 print(t)
 print(cl)
 print(ch)
-
-
-
