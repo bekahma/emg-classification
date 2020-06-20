@@ -1,4 +1,5 @@
-import student as s
+from practice_questions import object_and_classes as s
+
 
 def two_ints(N,M):
 	list = []
