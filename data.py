@@ -45,10 +45,13 @@ colour_signal = []
 for i in cl:
     # hand clenched = red colour in plot
     if i == 2:
-        colour_signal.append("red")
+        colour_signal.append('r')
     else:
-        colour_signal.append("black")
+        colour_signal.append('b')
 print(colour_signal)
+
+plt.plot(t_sec, ch_mv, color='colour_signal')
+plt.show()
 
 # length = len(cl)
 # plt.plot(t_sec, ch_mv, color='blue')
