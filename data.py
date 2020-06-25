@@ -32,22 +32,33 @@ t_sec = t / 1000
 print(t_sec)
 
 # plot 1: ch_mv vs. t_sec
-plt.plot(t_sec, ch_mv)
-plt.ylabel('channel1 (mV)')
-plt.xlabel('time in (s)')
-plt.title('plot 1: EMG signal vs. time')
+# plt.plot(t_sec, ch_mv)
+# plt.ylabel('channel1 (mV)')
+# plt.xlabel('time in (s)')
+# plt.title('plot 1: EMG signal vs. time')
 # plt.show()
 
 # plot 2: ch_mv vs. t_sec (red when class = 2)
-length = len(cl)
-# plt.plot(t_sec, ch_mv, color='blue')
-for i in range(length):
-    if cl[i] == 2:
-        plt.plot(t_sec[i], ch_mv[i], color='red')
+# make an array of strings w the same length as signal (black, black, red..etc)
+colour_signal = []
+# colour_signal array must be the same length as class array
+for i in cl:
+    # hand clenched = red colour in plot
+    if i == 2:
+        colour_signal.append("red")
+    else:
+        colour_signal.append("black")
+print(colour_signal)
 
-plt.title('plot 2: EMG signal vs. time')
-plt.ylabel('channel1 (mV)')
-plt.xlabel('time (s)')
-plt.show()
+# length = len(cl)
+# plt.plot(t_sec, ch_mv, color='blue')
+# for i in range(length):
+#    if cl[i] == 2:
+#       plt.plot(t_sec[i], ch_mv[i], color='red')
+
+# plt.title('plot 2: EMG signal vs. time')
+# plt.ylabel('channel1 (mV)')
+# plt.xlabel('time (s)')
+# plt.show()
 
 
