@@ -7,10 +7,13 @@ df = pd.read_csv('./EMG_data/01/1_raw_data_13-12_22.03.16.txt', sep="\t")
 print(df)
 print(df.columns)
 
+# convert class column to integer type
 df['class'] = df['class'].astype(int)
 
+print("\ndata types of each column: ")
 print(df.dtypes)
 
+# extract data from dataFrame to separate numpy arrays
 time_col = df.loc[:,'time']
 class_col = df.loc[:,'class']
 channel1_col = df.loc[:,'channel1']
@@ -19,16 +22,19 @@ t = time_col.values
 cl = class_col.values
 ch = channel1_col.values
 
+print("\nnumpy arrays for time, class, channel1: ")
 print(t)
 print(cl)
 print(ch)
 
 # multiply channel1 data by 1000 (convert to mV)
 ch_mv = ch * 1000
+print("\nchannel1 data in mV: ")
 print(ch_mv)
 
 # divide time data by 1000 (convert to sec)
 t_sec = t / 1000
+print("\ntime data in sec: ")
 print(t_sec)
 
 # plot 1: ch_mv vs. t_sec
@@ -48,10 +54,11 @@ for i in cl:
         colour_signal.append('r')
     else:
         colour_signal.append('b')
+print("\ncolour_signal:")
 print(colour_signal)
 
-plt.plot(t_sec, ch_mv, color='colour_signal')
-plt.show()
+# plt.plot(t_sec, ch_mv, color='colour_signal')
+# plt.show()
 
 # length = len(cl)
 # plt.plot(t_sec, ch_mv, color='blue')
