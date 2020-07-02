@@ -37,7 +37,7 @@ t_sec = t / 1000
 print("\ntime data in sec: ")
 print(t_sec)
 
-# plot 1: ch_mv vs. t_sec
+# plot1: ch_mv vs. t_sec
 # plt.plot(t_sec, ch_mv)
 # plt.ylabel('channel1 (mV)')
 # plt.xlabel('time in (s)')
@@ -50,6 +50,7 @@ colour_signal = []
 # colour_signal array must be the same length as class array
 for i in cl:
     # hand clenched = red colour in plot
+    # ^ how do we know h
     if i == 2:
         colour_signal.append('r')
     else:
@@ -59,6 +60,22 @@ print(colour_signal)
 
 # plt.plot(t_sec, ch_mv, color='colour_signal')
 # plt.show()
+
+# <----------------- yewon's attempt...? ----------------->
+# sections of the signal where class = 2
+first_signal = ch_mv[cl == 2]
+first_time = t[cl == 2]
+
+plt.plot(first_time, first_signal, color='red')
+
+# sections of the signal where class != 2
+first_signal = ch_mv[cl != 2]
+first_time = t[cl != 2]
+
+plt.plot(first_time, first_signal, color='blue')
+
+# show the plot for the first signal
+plt.show()
 
 # length = len(cl)
 # plt.plot(t_sec, ch_mv, color='blue')
