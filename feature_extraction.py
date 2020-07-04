@@ -16,7 +16,7 @@ def variance(x):
         arr.append(val)
     return sum(np.square(arr))/len(x)
 
-#bekah's feature
+#bekah's feature - SCC
 
 
 
