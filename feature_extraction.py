@@ -1,4 +1,5 @@
 import numpy as np
+import statistics
 
 def mean_absolute_value(x):
     sum1 = sum(np.absolute(x))
@@ -27,12 +28,16 @@ def variance(x):
 
 
 #lixin's feature
-
+def standard_error(x):
+    sd = statistics.stdev(x)
+    sqrt_num = np.sqrt(len(x))
+    return sd/sqrt_num
 
 
 
 #test array
 arr1 = [1,2,3,4,5]
+
 
 
 
