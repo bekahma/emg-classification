@@ -1,6 +1,7 @@
 # Code to generate test signals for Task List 4
 import numpy as np
 import pandas as pd
+from scipy import stats
 
 # Make sure this points to the right directory. 
 # I have all the folders (01, 02, etc.) in a directory called 'data'.
@@ -34,3 +35,14 @@ for signal, label in zip([test_1, test_2], ['resting', 'fist']):
 # signal_windows is a dictionary with the keys 'resting' and 'fist'
 # Each entry in the dictionary is a nd-array 
 # of shape (10, 300) containing 10 windows of length 300 each
+
+#importing standard_error func from feature_extraction.py
+from feature_extraction import standard_error
+
+#testing standard_error functon test signals
+print(standard_error(test_1))
+print(standard_error(test_2))
+
+#check output values from standard_error func with scipy standard error func
+print(stats.sem(test_1))
+print(stats.sem(test_2))
