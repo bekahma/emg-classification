@@ -4,7 +4,10 @@ import pandas as pd
 
 # Make sure this points to the right directory. 
 # I have all the folders (01, 02, etc.) in a directory called 'data'.
-file = 'data/01/1_raw_data_13-12_22.03.16.txt'
+# file = 'data/01/1_raw_data_13-12_22.03.16.txt'
+
+# folders are in a directory called 'EMG_data' not 'data'
+file = 'EMG_data/01/1_raw_data_13-12_22.03.16.txt'
 
 # Load the data into a dataframe
 data = np.loadtxt(file, skiprows=1)
