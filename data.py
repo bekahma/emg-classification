@@ -17,6 +17,8 @@ print(df.dtypes)
 time_col = df.loc[:,'time']
 class_col = df.loc[:,'class']
 channel1_col = df.loc[:,'channel1']
+channel2_col = df.loc[:,'channel2']
+channel3_col = df.loc[:,'channel3']
 
 t = time_col.values
 cl = class_col.values
