@@ -16,6 +16,21 @@ def variance(x):
         arr.append(val)
     return sum(np.square(arr))/len(x)
 
+#bekahs's feature
+
+
+
+
+#yewon's feature
+
+
+
+
+#lixin's feature
+
+
+
+
 #test array
 arr1 = [1,2,3,4,5]
 
