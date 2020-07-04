@@ -49,7 +49,7 @@ plt.plot(t_sec, ch_mv)
 plt.ylabel('channel1 (mV)')
 plt.xlabel('time in (s)')
 plt.title('plot 1: EMG signal vs. time')
-# plt.show()
+plt.show()
 
 # plot 2: ch_mv vs. t_sec (red when class = 2)
 # <----------------- yewon's attempt...? ----------------->
@@ -66,18 +66,62 @@ first_time = t[cl != 2]
 plt.plot(first_time, first_signal, color='blue')
 
 # show the plot for the first signal
-# plt.show()
+plt.show()
 
 # plot 3: channel 1 to 3 plot (same colour)
 plt.figure()
 plt.subplot(311)
+plt.ylabel('channel1')
 plt.plot(t_sec, ch_mv)
 
 plt.subplot(312)
+plt.ylabel('channel2')
 plt.plot(t_sec, ch_mv2)
 
 plt.subplot(313)
+plt.ylabel('channel3')
 plt.plot(t_sec, ch_mv3)
-plt.show()
+plt.xlabel('time in s')
+# plt.show()
 
+# plot 4: channel 1 to 3 plot (red when hand is clenched)
+plt.figure()
+plt.subplot(311)
+plt.ylabel('channel1')
+
+fs = ch_mv[cl == 2]
+ft = t[cl == 2]
+plt.plot(ft, fs, color='red')
+
+fs = ch_mv[cl != 2]
+ft = t[cl != 2]
+
+plt.plot(ft, fs, color='blue')
+
+plt.subplot(312)
+plt.ylabel('channel2')
+
+fs2 = ch_mv2[cl == 2]
+ft2 = t[cl == 2]
+plt.plot(ft2, fs2, color='red')
+
+fs2 = ch_mv2[cl != 2]
+ft2 = t[cl != 2]
+
+plt.plot(ft2, fs2, color='blue')
+
+plt.subplot(313)
+plt.ylabel('channel3')
+
+fs3 = ch_mv3[cl == 2]
+ft3 = t[cl == 2]
+plt.plot(ft3, fs3, color='red')
+
+fs3 = ch_mv3[cl != 2]
+ft3 = t[cl != 2]
+
+plt.plot(ft3, fs3, color='blue')
+
+plt.xlabel('time in s')
+plt.show()
 
