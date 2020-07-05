@@ -19,7 +19,8 @@ def variance(x):
 
 #bekah's feature - SCC
 def slope_sign_change(x):
-    return np.sign(np.diff(x))
+    scc = np.diff(np.sign(np.diff(x)))
+    return scc[scc!=0].size
 
 #yewon's feature
 
@@ -35,8 +36,8 @@ def standard_error(x):
 
 
 #test array
-# arr1 = [1,2,-3,4,5]
-
+arr1 = [1,2,-3,4,5]
+# slope_sign_change(arr1)
 
 
 

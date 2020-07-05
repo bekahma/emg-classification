@@ -36,7 +36,7 @@ for signal, label in zip([test_1, test_2], ['resting', 'fist']):
 # Each entry in the dictionary is a nd-array 
 # of shape (10, 300) containing 10 windows of length 300 each
 
-#importing standard_error func from feature_extraction.py
+#importing feature functions from feature_extraction.py
 from feature_extraction import standard_error
 from feature_extraction import slope_sign_change
 
