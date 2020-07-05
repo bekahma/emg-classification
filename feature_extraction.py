@@ -23,9 +23,12 @@ def slope_sign_change(x):
     return scc[scc!=0].size
 
 #yewon's feature
-
-
-
+def waveform_length(x):
+    # sum of abs value of difference of each element
+    length = 0
+    for i in range(len(x)-1):
+        length += np.absolute(x[i+1] - x[i])
+    return length
 
 #lixin's feature
 def standard_error(x):
@@ -34,11 +37,7 @@ def standard_error(x):
     return sd/sqrt_num
 
 
-
 #test array
 arr1 = [1,2,-3,4,5]
 # slope_sign_change(arr1)
-
-
-
-
+print(waveform_length(arr1))

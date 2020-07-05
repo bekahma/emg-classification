@@ -39,6 +39,7 @@ for signal, label in zip([test_1, test_2], ['resting', 'fist']):
 #importing feature functions from feature_extraction.py
 from feature_extraction import standard_error
 from feature_extraction import slope_sign_change
+from feature_extraction import waveform_length
 
 #testing standard_error function test signals
 print(standard_error(test_1))
@@ -46,6 +47,9 @@ print(standard_error(test_2))
 
 print(slope_sign_change(test_1))
 print(slope_sign_change(test_2))
+
+print(waveform_length(test_1))
+print(waveform_length(test_2))
 
 #check output values from standard_error func with scipy standard error func
 print(stats.sem(test_1))
