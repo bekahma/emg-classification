@@ -18,9 +18,8 @@ def variance(x):
     return sum(np.square(arr))/len(x)
 
 #bekah's feature - SCC
-
-
-
+def slope_sign_change(x):
+    return np.sign(np.diff(x))
 
 #yewon's feature
 
@@ -36,8 +35,7 @@ def standard_error(x):
 
 
 #test array
-#arr1 = [1,2,3,4,5]
-
+# arr1 = [1,2,-3,4,5]
 
 
 
