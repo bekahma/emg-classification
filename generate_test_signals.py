@@ -2,9 +2,29 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 
+# Extract signal files
+from zipfile import ZipFile
+
+file_name1 = "dataframe_no_signal_compressed.zip"
+file_name2 = 'labelled_signal_data_epochs_compressed.zip'
+
+with ZipFile(file_name1, 'r') as zip:
+    zip.printdir()
+
+    print('Extracting files from dataframe_no_signal_compressed.zip...')
+    zip.extractall()
+    print('Done')
+
+with ZipFile(file_name2, 'r') as zip:
+    zip.printdir()
+
+    print('Extracting files from labelled_signal_data_epochs_compressed.zip...')
+    zip.extractall()
+    print('Done')
+
 # Load signal files
-labelled_signals = np.loadtxt('./data/labelled_signal_data_epochs.txt')
-df = pd.read_csv('./data/dataframe_no_signal.csv')
+labelled_signals = np.loadtxt('./labelled_signal_data_epochs.txt')
+df = pd.read_csv('./dataframe_no_signal.csv')
 
 # Assemble into dataframe
 df['signal'] = labelled_signals.tolist()
