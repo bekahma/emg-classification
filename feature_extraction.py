@@ -40,4 +40,4 @@ def standard_error(x):
 #test array
 arr1 = [1,2,-3,4,5]
 # slope_sign_change(arr1)
-print(waveform_length(arr1))
+# print(waveform_length(arr1))

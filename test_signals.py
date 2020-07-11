@@ -20,6 +20,21 @@ df['class'] = df['class'].astype(int)
 # Use test_1 and test_2 to report values for your feature functions to test if they are working correctly
 test_1 = df.loc[df['class'] == 1, 'ch1'].values * 1000 # resting, channel 1
 test_2 = df.loc[df['class'] == 2, 'ch1'].values * 1000 # fist, channel 1
+test_3 = df.loc[df['class'] == 1, 'ch2'].values * 1000 # resting, channel 2
+test_4 = df.loc[df['class'] == 2, 'ch2'].values * 1000 # fist, channel 3
+test_5 = df.loc[df['class'] == 1, 'ch3'].values * 1000 # resting, channel 3
+test_6 = df.loc[df['class'] == 2, 'ch3'].values * 1000 # fist, channel 3
+test_7 = df.loc[df['class'] == 1, 'ch4'].values * 1000
+test_8 = df.loc[df['class'] == 2, 'ch4'].values * 1000
+test_9 = df.loc[df['class'] == 1, 'ch5'].values * 1000
+test_10 = df.loc[df['class'] == 2, 'ch5'].values * 1000
+test_11 = df.loc[df['class'] == 1, 'ch6'].values * 1000
+test_12 = df.loc[df['class'] == 2, 'ch6'].values * 1000
+test_13 = df.loc[df['class'] == 1, 'ch7'].values * 1000
+test_14 = df.loc[df['class'] == 2, 'ch7'].values * 1000
+test_15 = df.loc[df['class'] == 1, 'ch8'].values * 1000
+test_16 = df.loc[df['class'] == 2, 'ch8'].values * 1000
+
 
 # Generate several test signals to make example feature plot
 window_len = 300
@@ -32,6 +47,26 @@ for signal, label in zip([test_1, test_2], ['resting', 'fist']):
         lst_windows.append(np.array(signal[i*window_len:(i+1)*window_len]))
     signal_windows[label] = np.array(lst_windows)
 
+print(signal_windows)
+
+#for signal, label in zip([test_3, test_4], ['resting', 'fist']):
+#    lst_windows = []
+#    for i in range(n_iter):
+#        lst_windows.append(np.array(signal[i*window_len:(i+1)*window_len]))
+#    signal_windows[label] = np.array(lst_windows)
+#
+#for signal, label in zip([test_5, test_6], ['resting', 'fist']):
+#    lst_windows = []
+#    for i in range(n_iter):
+#        lst_windows.append(np.array(signal[i*window_len:(i+1)*window_len]))
+#    signal_windows[label] = np.array(lst_windows)
+#
+#for signal, label in zip([test_7, test_8], ['resting', 'fist']):
+#    lst_windows = []
+#    for i in range(n_iter):
+#        lst_windows.append(np.array(signal[i*window_len:(i+1)*window_len]))
+#    signal_windows[label] = np.array(lst_windows)
+#
 # signal_windows is a dictionary with the keys 'resting' and 'fist'
 # Each entry in the dictionary is a nd-array 
 # of shape (10, 300) containing 10 windows of length 300 each
@@ -44,14 +79,14 @@ from feature_extraction import slope_sign_change
 from feature_extraction import waveform_length
 
 #testing standard_error function test signals
-print(standard_error(test_1))
-print(standard_error(test_2))
+# print(standard_error(test_1))
+# print(standard_error(test_2))
 
-print(slope_sign_change(test_1))
-print(slope_sign_change(test_2))
+# print(slope_sign_change(test_1))
+# print(slope_sign_change(test_2))
 
-print(waveform_length(test_1))
-print(waveform_length(test_2))
+# print(waveform_length(test_1))
+# print(waveform_length(test_2))
 
 #check output values from standard_error func with scipy standard error func
 # print(stats.sem(test_1))
@@ -72,12 +107,13 @@ for key, value in signal_windows.items():
             fist_mav.append(mean_absolute_value(value[i]))
             fist_var.append(variance(value[i]))
 
-# plt.figure(1)
-# plt.figure(figsize=(12,8))
-# plt.scatter(resting_mav, resting_var, c="purple", label="resting features")
-# plt.scatter(fist_mav, fist_var, c="orange", label="fist features")
-# plt.xlabel("Feature1: Mean Absolute Value")
-# plt.ylabel("Feature2: Variance")
+plt.figure(1)
+plt.figure(figsize=(12,8))
+plt.scatter(resting_mav, resting_var, c="purple", label="resting features")
+plt.scatter(fist_mav, fist_var, c="orange", label="fist features")
+plt.xlabel("Feature1: Mean Absolute Value")
+plt.ylabel("Feature2: Variance")
+plt.show()
 
 # feature plot standard error and slope sign change
 resting_se = []
@@ -100,6 +136,7 @@ plt.scatter(fist_se, fist_ssc, c="orange", label="fist features")
 plt.legend(loc="best")
 plt.xlabel("Feature1: Standard Error")
 plt.ylabel("Feature2: Slope Sign Change")
+# plt.show()
 
 plt.figure(3)
 plt.figure(figsize=(12,8))
@@ -109,4 +146,4 @@ plt.legend(loc="best")
 plt.xlabel("Feature1: Standard Error")
 plt.ylabel("Feature2: Variance")
 
-plt.show()
+# plt.show()

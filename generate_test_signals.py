@@ -1,8 +1,14 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
+from feature_extraction import mean_absolute_value
+from feature_extraction import variance
+from feature_extraction import standard_error
+from feature_extraction import slope_sign_change
+from feature_extraction import waveform_length
 
 # Extract signal files
+"""
 from zipfile import ZipFile
 
 file_name1 = "dataframe_no_signal_compressed.zip"
@@ -21,6 +27,7 @@ with ZipFile(file_name2, 'r') as zip:
     print('Extracting files from labelled_signal_data_epochs_compressed.zip...')
     zip.extractall()
     print('Done')
+"""
 
 # Load signal files
 labelled_signals = np.loadtxt('./labelled_signal_data_epochs.txt')
@@ -44,7 +51,6 @@ cls_labels_23 = np.append(np.ones((cls_2_ids.size,)) * 2, np.ones((cls_3_ids.siz
 # Split data
 X_train_12, X_test_12, y_train, y_test = train_test_split(cls_ids_12, cls_labels_12, test_size=0.25, random_state=0)
 X_train_23, X_test_23, y_train, y_test = train_test_split(cls_ids_23, cls_labels_23, test_size=0.25, random_state=0)
-
 
 def get_train_signals_2a(cls, channel):
     """
@@ -114,3 +120,32 @@ def test_classifier_2b(classifier_fun):
     print('{} correct out of {} in test dataset for 2b'.format(num_correct, ys.size))
     print('Classifier accuracy on test data: {:.3f}'.format(accuracy))
     return accuracy
+
+
+def classify_se_var(x):
+    A = standard_error(x)
+    B = variance(x)
+    discriminant = 0.005 # line B = 3*A - 4 separates the data into two classes
+    if B >= discriminant:
+        cls = 1
+    else:
+        cls = 2
+    return cls
+#
+def classifier_se_ssc(x):
+    """
+    Classifies EMG segment, x, as either class 1 or 2
+    :param x: 8 by 256 nd-array. Dimension 0 are the 8 channels. Dimension 1 is the signal for each channel
+    :return: class label
+    """
+    A = standard_error(x)
+    B = slope_sign_change(x)
+    discriminant = 0.0014
+    if A >= discriminant:
+        cls = 1
+    else:
+        cls = 2
+    return cls
+
+print(classify_se_var(cls_labels_12))
+print(test_classifier_2a(classify_se_var(cls_labels_12)))
