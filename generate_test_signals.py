@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 from feature_extraction import mean_absolute_value
 from feature_extraction import variance
 from feature_extraction import standard_error
+from feature_extraction import root_mean_square
 from feature_extraction import slope_sign_change
 from feature_extraction import waveform_length
 import matplotlib.pyplot as plt
@@ -123,17 +124,7 @@ def test_classifier_2b(classifier_fun):
     print('Classifier accuracy on test data: {:.3f}'.format(accuracy))
     return accuracy
 
-
-def classify_se_var(x):
-    A = standard_error(x)
-    B = variance(x)
-    discriminant = 0.005 # line B = 3*A - 4 separates the data into two classes
-    if B >= discriminant:
-        cls = 1
-    else:
-        cls = 2
-    return cls
-#
+#class 1 and 2
 def classifier_se_var_2a(x):
     """
     Classifies EMG segment, x, as either class 1 or 2
@@ -147,21 +138,42 @@ def classifier_se_var_2a(x):
     else: return 2
 
 #class 2 and 3
-def classifier_2b(x):
-    return 1
-
+def classifier_mav_rms_2b(x):
+    feature_1 = mean_absolute_value(x[0, :])
+    feature_2 = root_mean_square(x[0, :])
+    if (feature_1 < 0.034) and (feature_2 < 0.3):
+        return 1
+    else: return 2
 
 # get train signals for class 1,2 channel 1
+"""
 cls1_ch1 = get_train_signals_2a(1, 1)
 cls2_ch1 = get_train_signals_2a(2, 1)
 cls1_ch1.shape
+
 cls1_ch1_se = np.apply_along_axis(standard_error, 1, cls1_ch1)
 cls2_ch1_se = np.apply_along_axis(standard_error, 1, cls2_ch1)
 cls1_ch1_var = np.apply_along_axis(variance, 1, cls1_ch1)
 cls2_ch1_var = np.apply_along_axis(variance, 1, cls2_ch1)
 cls1_ch1_se.shape
 cls1_ch1_var.shape
+"""
 
+#get train signals for class 2,3 channel 4
+cls2_ch1 = get_train_signals_2b(2, 1)
+cls3_ch1 = get_train_signals_2b(3, 1)
+# cls2_ch2 = get_train_signals_2b(2, 2)
+# cls3_ch1 = get_train_signals_2b(3, 1)
+cls2_ch1.shape
+
+cls2_ch1_mav = np.apply_along_axis(mean_absolute_value, 1, cls2_ch1)
+cls3_ch1_mav = np.apply_along_axis(mean_absolute_value, 1, cls3_ch1)
+cls2_ch1_rms= np.apply_along_axis(root_mean_square, 1, cls2_ch1)
+cls3_ch1_rms = np.apply_along_axis(root_mean_square, 1, cls3_ch1)
+cls2_ch1_mav.shape
+cls3_ch1_rms.shape
+#plot class 1,2 channel 1
+"""
 plt.figure(figsize=(12,8))
 plt.scatter(cls1_ch1_se, cls1_ch1_var, c='green', label="Resting Features", s=4)
 plt.scatter(cls2_ch1_se, cls2_ch1_var, c='red', label="Fist Features", s=4)
@@ -172,7 +184,22 @@ plt.xlabel('Standard Error (CH1)')
 plt.ylabel('Variance (CH1)')
 plt.title("Feature plot for Class 1 (Resting) and Class 2 (Fist)")
 plt.show()
+"""
 
-test_classifier_2a(classifier_se_var_2a)
+#plot class 2,3 channel 4
+plt.figure(figsize=(12,8))
+plt.scatter(cls2_ch1_mav, cls2_ch1_rms, c='green', label="Fist Feature", s=4)
+plt.scatter(cls3_ch1_mav, cls3_ch1_rms, c='red', label="Wrist Flexion Feature", s=4)
+ax = plt.gca()
+# ax.add_patch(mpatches.Rectangle((0, 0), 0.00175, 0.005, fill = False, color = 'purple'))
+plt.legend(loc='best')
+plt.xlabel('Mean Absolute Value (CH1)')
+plt.ylabel('Root Mean Square (CH1)')
+plt.title("Feature plot for Class 2 (Fist) and Class 3 (Wrist Flexion)")
+plt.show()
+
+#call test classifier functions
+# test_classifier_2a(classifier_se_var_2a)
+test_classifier_2b(classifier_mav_rms_2b)
 
 
