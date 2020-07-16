@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 # file = 'data/01/1_raw_data_13-12_22.03.16.txt'
 
 # folders are in a directory called 'EMG_data' not 'data'
-file = 'EMG_data/01/1_raw_data_13-12_22.03.16.txt'
+file = 'EMG_data/19/1_raw_data_12-10_26.04.16.txt'
 
 # Load the data into a dataframe
 data = np.loadtxt(file, skiprows=1)
@@ -20,28 +20,14 @@ df['class'] = df['class'].astype(int)
 # Use test_1 and test_2 to report values for your feature functions to test if they are working correctly
 test_1 = df.loc[df['class'] == 1, 'ch1'].values * 1000 # resting, channel 1
 test_2 = df.loc[df['class'] == 2, 'ch1'].values * 1000 # fist, channel 1
-test_3 = df.loc[df['class'] == 1, 'ch2'].values * 1000 # resting, channel 2
-test_4 = df.loc[df['class'] == 2, 'ch2'].values * 1000 # fist, channel 3
-test_5 = df.loc[df['class'] == 1, 'ch3'].values * 1000 # resting, channel 3
-test_6 = df.loc[df['class'] == 2, 'ch3'].values * 1000 # fist, channel 3
-test_7 = df.loc[df['class'] == 1, 'ch4'].values * 1000
-test_8 = df.loc[df['class'] == 2, 'ch4'].values * 1000
-test_9 = df.loc[df['class'] == 1, 'ch5'].values * 1000
-test_10 = df.loc[df['class'] == 2, 'ch5'].values * 1000
-test_11 = df.loc[df['class'] == 1, 'ch6'].values * 1000
-test_12 = df.loc[df['class'] == 2, 'ch6'].values * 1000
-test_13 = df.loc[df['class'] == 1, 'ch7'].values * 1000
-test_14 = df.loc[df['class'] == 2, 'ch7'].values * 1000
-test_15 = df.loc[df['class'] == 1, 'ch8'].values * 1000
-test_16 = df.loc[df['class'] == 2, 'ch8'].values * 1000
-
+test_3 = df.loc[df['class'] == 3, 'ch1'].values * 1000 # wrist flexion, channel 1
 
 # Generate several test signals to make example feature plot
 window_len = 300
 n_iter = 10 
 signal_windows = {}
 
-for signal, label in zip([test_1, test_2], ['resting', 'fist']):
+for signal, label in zip([test_1, test_2, test_3], ['resting', 'fist', 'wrist flexion']):
     lst_windows = []
     for i in range(n_iter):
         lst_windows.append(np.array(signal[i*window_len:(i+1)*window_len]))
@@ -98,6 +84,7 @@ resting_var=[]
 fist_mav = []
 fist_var = []
 
+
 for key, value in signal_windows.items():
     for i in range(len(value)):
         if key == "resting":
@@ -107,19 +94,22 @@ for key, value in signal_windows.items():
             fist_mav.append(mean_absolute_value(value[i]))
             fist_var.append(variance(value[i]))
 
-plt.figure(1)
-plt.figure(figsize=(12,8))
-plt.scatter(resting_mav, resting_var, c="purple", label="resting features")
-plt.scatter(fist_mav, fist_var, c="orange", label="fist features")
-plt.xlabel("Feature1: Mean Absolute Value")
-plt.ylabel("Feature2: Variance")
-plt.show()
+# plt.figure(1)
+# plt.figure(figsize=(12,8))
+# plt.scatter(resting_mav, resting_var, c="purple", label="resting features")
+# plt.scatter(fist_mav, fist_var, c="orange", label="fist features")
+# plt.xlabel("Feature1: Mean Absolute Value")
+# plt.ylabel("Feature2: Variance")
+# plt.show()
 
 # feature plot standard error and slope sign change
 resting_se = []
 resting_ssc = []
 fist_se = []
 fist_ssc = []
+wrist_se = []
+wrist_var = []
+wrist_mav = []
 
 for key, value in signal_windows.items():
     for i in range(len(value)):
@@ -129,21 +119,35 @@ for key, value in signal_windows.items():
         elif key == "fist":
             fist_se.append(standard_error(value[i]))
             fist_ssc.append(slope_sign_change(value[i]))
-plt.figure(2)
-plt.figure(figsize=(12,8))
-plt.scatter(resting_se, resting_ssc, c="purple", label="resting features")
-plt.scatter(fist_se, fist_ssc, c="orange", label="fist features")
-plt.legend(loc="best")
-plt.xlabel("Feature1: Standard Error")
-plt.ylabel("Feature2: Slope Sign Change")
-# plt.show()
+        elif key == "wrist flexion":
+            wrist_se.append(standard_error(value[i]))
+            wrist_var.append(variance(value[i]))
+            wrist_mav.append(mean_absolute_value(value[i]))
 
-plt.figure(3)
+# plt.figure(2)
+# plt.figure(figsize=(12,8))
+# plt.scatter(resting_se, resting_ssc, c="purple", label="resting features")
+# plt.scatter(fist_se, fist_ssc, c="orange", label="fist features")
+# plt.legend(loc="best")
+# plt.xlabel("Feature1: Standard Error")
+# plt.ylabel("Feature2: Slope Sign Change")
+# # plt.show()
+
+# standard error vs variance
+# plt.figure(3)
+# plt.figure(figsize=(12,8))
+# plt.scatter(resting_se, resting_var, c="red", label="resting features")
+# plt.scatter(fist_se, fist_var, c="blue", label="fist features")
+# plt.legend(loc="best")
+# plt.xlabel("Feature1: Standard Error")
+# plt.ylabel("Feature2: Variance")
+
+# standard error vs variance (fist and wrist flexion)
+plt.figure()
 plt.figure(figsize=(12,8))
-plt.scatter(resting_se, resting_var, c="red", label="resting features")
-plt.scatter(fist_se, fist_var, c="blue", label="fist features")
+plt.scatter(wrist_mav, wrist_var, c="red", label="wrist flexion features")
+plt.scatter(fist_mav, fist_var, c="blue", label="fist features")
 plt.legend(loc="best")
-plt.xlabel("Feature1: Standard Error")
+plt.xlabel("Feature1: MAV")
 plt.ylabel("Feature2: Variance")
-
-# plt.show()
+plt.show()

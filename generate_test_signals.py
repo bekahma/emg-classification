@@ -6,6 +6,8 @@ from feature_extraction import variance
 from feature_extraction import standard_error
 from feature_extraction import slope_sign_change
 from feature_extraction import waveform_length
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 
 # Extract signal files
 """
@@ -132,20 +134,45 @@ def classify_se_var(x):
         cls = 2
     return cls
 #
-def classifier_se_ssc(x):
+def classifier_se_var_2a(x):
     """
     Classifies EMG segment, x, as either class 1 or 2
     :param x: 8 by 256 nd-array. Dimension 0 are the 8 channels. Dimension 1 is the signal for each channel
     :return: class label
     """
-    A = standard_error(x)
-    B = slope_sign_change(x)
-    discriminant = 0.0014
-    if A >= discriminant:
-        cls = 1
-    else:
-        cls = 2
-    return cls
+    feature_1 = standard_error(x[0, :])
+    feature_2 = variance(x[0, :])
+    if (feature_1 < 0.00175) and (feature_2 < 0.005):
+        return 1
+    else: return 2
 
-print(classify_se_var(cls_labels_12))
-print(test_classifier_2a(classify_se_var(cls_labels_12)))
+#class 2 and 3
+def classifier_2b(x):
+    return 1
+
+
+# get train signals for class 1,2 channel 1
+cls1_ch1 = get_train_signals_2a(1, 1)
+cls2_ch1 = get_train_signals_2a(2, 1)
+cls1_ch1.shape
+cls1_ch1_se = np.apply_along_axis(standard_error, 1, cls1_ch1)
+cls2_ch1_se = np.apply_along_axis(standard_error, 1, cls2_ch1)
+cls1_ch1_var = np.apply_along_axis(variance, 1, cls1_ch1)
+cls2_ch1_var = np.apply_along_axis(variance, 1, cls2_ch1)
+cls1_ch1_se.shape
+cls1_ch1_var.shape
+
+plt.figure(figsize=(12,8))
+plt.scatter(cls1_ch1_se, cls1_ch1_var, c='green', label="Resting Features", s=4)
+plt.scatter(cls2_ch1_se, cls2_ch1_var, c='red', label="Fist Features", s=4)
+ax = plt.gca()
+ax.add_patch(mpatches.Rectangle((0, 0), 0.00175, 0.005, fill = False, color = 'purple'))
+plt.legend(loc='best')
+plt.xlabel('Standard Error (CH1)')
+plt.ylabel('Variance (CH1)')
+plt.title("Feature plot for Class 1 (Resting) and Class 2 (Fist)")
+plt.show()
+
+test_classifier_2a(classifier_se_var_2a)
+
+
