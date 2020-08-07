@@ -138,12 +138,12 @@ def classifier_se_var_2a(x):
     else: return 2
 
 #class 2 and 3
-def classifier_mav_rms_2b(x):
+def classifier_mav_ssc_2b(x):
     feature_1 = mean_absolute_value(x[0, :])
-    feature_2 = root_mean_square(x[0, :])
-    if (feature_1 < 0.034) and (feature_2 < 0.3):
-        return 1
-    else: return 2
+    feature_2 = slope_sign_change(x[0, :])
+    if (feature_1 < 0.08):
+        return 2
+    else: return 3
 
 # get train signals for class 1,2 channel 1
 """
@@ -160,18 +160,18 @@ cls1_ch1_var.shape
 """
 
 #get train signals for class 2,3 channel 4
-cls2_ch1 = get_train_signals_2b(2, 1)
-cls3_ch1 = get_train_signals_2b(3, 1)
+cls2_ch3 = get_train_signals_2b(2, 3)
+cls3_ch3 = get_train_signals_2b(3, 3)
 # cls2_ch2 = get_train_signals_2b(2, 2)
 # cls3_ch1 = get_train_signals_2b(3, 1)
-cls2_ch1.shape
+cls2_ch3.shape
 
-cls2_ch1_mav = np.apply_along_axis(mean_absolute_value, 1, cls2_ch1)
-cls3_ch1_mav = np.apply_along_axis(mean_absolute_value, 1, cls3_ch1)
-cls2_ch1_rms= np.apply_along_axis(root_mean_square, 1, cls2_ch1)
-cls3_ch1_rms = np.apply_along_axis(root_mean_square, 1, cls3_ch1)
-cls2_ch1_mav.shape
-cls3_ch1_rms.shape
+cls2_ch3_mav = np.apply_along_axis(mean_absolute_value, 1, cls2_ch3)
+cls3_ch3_mav = np.apply_along_axis(mean_absolute_value, 1, cls3_ch3)
+cls2_ch3_ssc= np.apply_along_axis(slope_sign_change, 1, cls2_ch3)
+cls3_ch3_ssc = np.apply_along_axis(slope_sign_change, 1, cls3_ch3)
+cls2_ch3_mav.shape
+cls3_ch3_ssc.shape
 #plot class 1,2 channel 1
 """
 plt.figure(figsize=(12,8))
@@ -188,18 +188,19 @@ plt.show()
 
 #plot class 2,3 channel 4
 plt.figure(figsize=(12,8))
-plt.scatter(cls2_ch1_mav, cls2_ch1_rms, c='green', label="Fist Feature", s=4)
-plt.scatter(cls3_ch1_mav, cls3_ch1_rms, c='red', label="Wrist Flexion Feature", s=4)
+plt.scatter(cls2_ch3_mav, cls2_ch3_ssc, c='green', label="Fist Feature", s=4)
+plt.scatter(cls3_ch3_mav, cls3_ch3_ssc, c='red', label="Wrist Flexion Feature", s=4)
 ax = plt.gca()
 # ax.add_patch(mpatches.Rectangle((0, 0), 0.00175, 0.005, fill = False, color = 'purple'))
+plt.vlines(0.08, 22, 55)
 plt.legend(loc='best')
-plt.xlabel('Mean Absolute Value (CH1)')
-plt.ylabel('Root Mean Square (CH1)')
+plt.xlabel('Mean Absolute Value (CH3)')
+plt.ylabel('Slope Sign Change (CH3)')
 plt.title("Feature plot for Class 2 (Fist) and Class 3 (Wrist Flexion)")
 plt.show()
 
 #call test classifier functions
 # test_classifier_2a(classifier_se_var_2a)
-test_classifier_2b(classifier_mav_rms_2b)
+test_classifier_2b(classifier_mav_ssc_2b)
 
 
